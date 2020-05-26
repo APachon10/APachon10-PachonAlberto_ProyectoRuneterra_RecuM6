@@ -40,9 +40,25 @@ public class Menu {
 				
 				// Verificamos los datos y entramos en caso de que los datos sean correctos 
 				if(existe_user == true && password_correct == true) {
-					System.out.println("Hola");
+					Scanner scan2 =  new Scanner(System.in);
+					int opcion2 = 0;
+					do {
+						System.out.println("Que quieres hacer  " + username + " ? "
+								+ "\n 1 - Crear Baraja"
+								+ "\n 2 - Modificar Baraja"
+								+ "\n 3 - Importar Mazo por Defecto"
+								+ "\n 4 - Comprar Cartas"
+								+ "\n 0 - Cerrar Sesion ");
+						System.out.println("======================");
+						System.out.print("Opcion:");
+						opcion2 = scan2.nextInt();
+						
+						switch(opcion2) {
+						case
+						}
+					} while (opcion2!=0);
 				}else {
-					System.out.println("Adios");
+					System.out.println("Login Incorrecto vuelve a intentarlo ");
 				}
 				break;
 			case 0:

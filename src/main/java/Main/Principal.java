@@ -9,7 +9,7 @@ import com.mongodb.client.MongoDatabase;
 import Conexion.GestionarConexion;
 import Querys.Login;
 
-public class Principla {
+public class Principal {
 	public static void main(String[] args) {
 		try {
 			desactivar_Log();
