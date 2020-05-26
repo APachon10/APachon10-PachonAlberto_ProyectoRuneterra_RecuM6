@@ -47,14 +47,14 @@ public class Menu {
 								+ "\n 1 - Crear Baraja"
 								+ "\n 2 - Modificar Baraja"
 								+ "\n 3 - Importar Mazo por Defecto"
-								+ "\n 4 - Comprar Cartas"
-								+ "\n 0 - Cerrar Sesion ");
+								+ "\n 4 - Comprar Cartas");
 						System.out.println("======================");
 						System.out.print("Opcion:");
 						opcion2 = scan2.nextInt();
 						
 						switch(opcion2) {
-						case
+							case 1:
+								break;
 						}
 					} while (opcion2!=0);
 				}else {
@@ -62,6 +62,7 @@ public class Menu {
 				}
 				break;
 			case 0:
+				System.out.println("Programa Terminado");
 				break;
 			}
 		} while (opcion!=0);
