@@ -1,5 +1,6 @@
 package Querys;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -8,6 +9,11 @@ import org.bson.Document;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.json.simple.JSONObject;
 
 public class Querys {
 	
@@ -54,7 +60,29 @@ public class Querys {
 		
 	}
 	//Metodo para dropear las tablas 
-	public void dropeartablas() {
+	public void dropeartablas(MongoDatabase db) {
+		MongoCollection<Document> collection_card = db.getCollection("Cards");
+		MongoCollection<Document> collection_user = db.getCollection("Users");
+		MongoCollection<Document> collection_deck = db.getCollection("Decks");
 		
+		
+		collection_card.drop();
+		collection_user.drop();
+		collection_deck.drop();
+		
+	}
+	//Metodo para cargar las tablas 
+	public void cargarTablaCartas() {
+		JSONParser parser = new JSONParser();
+		File f = new File("../PachonAlberto_ProyectoRuneTerra/Cartas.json");
+		
+	}
+	public void cargarTablaUsers() {
+		JSONParser parser = new JSONParser();
+		File f = new File("..PachonAlberto_ProyectoRuneTerra/Usuarios.json");
+	}
+	public void cargarTablaBarajas() {
+		JSONParser parser = new JSONParser();
+		File f = new File("../PachonAlberto_ProyectoRuneTerra/Barajas.json");
 	}
 }
