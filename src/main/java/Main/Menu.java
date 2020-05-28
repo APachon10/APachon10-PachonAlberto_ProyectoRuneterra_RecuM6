@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.mongodb.client.MongoDatabase;
 
 import Querys.Login;
+import Querys.Querys;
 
 public class Menu {	
 	 public void menu(MongoDatabase db) {
@@ -54,6 +55,8 @@ public class Menu {
 						
 						switch(opcion2) {
 							case 1:
+								Querys q = new Querys();
+								q.cargarTablaCartas();
 								break;
 						}
 					} while (opcion2!=0);

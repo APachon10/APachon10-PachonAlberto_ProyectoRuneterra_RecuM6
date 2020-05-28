@@ -1,11 +1,14 @@
 package Querys;
 
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.bson.Document;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -73,9 +76,9 @@ public class Querys {
 	}
 	//Metodo para cargar las tablas 
 	public void cargarTablaCartas() {
-		JSONParser parser = new JSONParser();
-		File f = new File("../PachonAlberto_ProyectoRuneTerra/Cartas.json");
 		
+		File f = new File("../PachonAlberto_ProyectoRuneTerra/Cartas.json");
+		leerFicheroJson(f);
 	}
 	public void cargarTablaUsers() {
 		JSONParser parser = new JSONParser();
@@ -84,5 +87,17 @@ public class Querys {
 	public void cargarTablaBarajas() {
 		JSONParser parser = new JSONParser();
 		File f = new File("../PachonAlberto_ProyectoRuneTerra/Barajas.json");
+	}
+	//Metodo para leer ficheros json
+	public void leerFicheroJson(File fjson) {
+		JSONParser parser = new JSONParser();
+		try {
+			FileReader fr = new FileReader(fjson);
+	        
+		} catch (Exception e) {
+			System.out.println("ERROR!");
+			System.out.println("======================");
+			e.printStackTrace();
+		}
 	}
 }
