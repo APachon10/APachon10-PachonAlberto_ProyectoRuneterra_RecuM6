@@ -2,7 +2,7 @@ package Modelos;
 
 import java.util.ArrayList;
 
-public class Usuarios {
+public class Usuarios extends Object{
 	private int id;
 	private String username;
 	private String password;

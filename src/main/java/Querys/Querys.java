@@ -97,7 +97,14 @@ public class Querys {
 		JSONParser parser = new JSONParser();
 		Document new_doc = null;
 		try {
+			//Leemos el Fichero 
 			FileReader fr = new FileReader(fjson);
+			/*Usamos un JSONArray porque el archivo tiene esta estructura -->  
+			[
+			 {},
+			 {}
+			]*/
+			
 			JSONArray lista_elementos = (JSONArray) parser.parse(fr);
 			// Usamos el simbolo de exclamacion para indicar que el contenido del iterator deriva de la clase Object
 			Iterator<?> iterator = lista_elementos.iterator();
@@ -106,24 +113,23 @@ public class Querys {
 				// Hacemos una accion u otra en base a la clase que le pasamos al metodo.
 				if(o instanceof Cartas) {
 					JSONObject object = (JSONObject) iterator.next();
-					Cartas carta = new Cartas();
-					carta.setId(Integer.parseInt(object.get("id").toString()));
-					carta.setTipo((String) object.get("tipo"));
-					carta.setNombre_carta((String) object.get("nombre_carta"));
-					carta.setCoste_invocacion(Integer.parseInt(object.get("coste_invocacion").toString()));
-					carta.setAtaque(Integer.parseInt(object.get("ataque").toString()));
-					carta.setVida(Integer.parseInt(object.get("vida").toString()));
-					carta.setHabilidad_especial((String) object.get("habilidad_especial"));
-					carta.setFaccion((String) object.get("faccion"));
+					((Cartas) o).setId(Integer.parseInt(object.get("id").toString()));
+					((Cartas) o).setTipo((String) object.get("tipo"));
+					((Cartas) o).setNombre_carta((String) object.get("nombre_carta"));
+					((Cartas) o).setCoste_invocacion(Integer.parseInt(object.get("coste_invocacion").toString()));
+					((Cartas) o).setAtaque(Integer.parseInt(object.get("ataque").toString()));
+					((Cartas) o).setVida(Integer.parseInt(object.get("vida").toString()));
+					((Cartas) o).setHabilidad_especial((String) object.get("habilidad_especial"));
+					((Cartas) o).setFaccion((String) object.get("faccion"));
 
-					new_doc = new Document("id", carta.getId())
-							.append("tipo", carta.getTipo())
-							.append("nombre_carta",carta.getNombre_carta())
-							.append("coste_invocacion",carta.getCoste_invocacion())
-							.append("ataque", carta.getAtaque())
-							.append("vida", carta.getVida())
-							.append("habilidad_especial", carta.getHabilidad_especial())
-							.append("faccion", carta.getFaccion());
+					new_doc = new Document("id", ((Cartas) o).getId())
+							.append("tipo", ((Cartas) o).getTipo())
+							.append("nombre_carta",((Cartas) o).getNombre_carta())
+							.append("coste_invocacion",((Cartas) o).getCoste_invocacion())
+							.append("ataque", ((Cartas) o).getAtaque())
+							.append("vida", ((Cartas) o).getVida())
+							.append("habilidad_especial", ((Cartas) o).getHabilidad_especial())
+							.append("faccion", ((Cartas) o).getFaccion());
 				}
 				nueva_coleccion.insertOne(new_doc);
 			}

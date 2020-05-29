@@ -8,7 +8,7 @@ import Querys.Login;
 import Querys.Querys;
 
 public class Menu {	
-	 public void menu(MongoDatabase db) {
+	 public void menu(MongoDatabase db) { 
 		 Scanner scanner = new Scanner(System.in); 
 		 int opcion = 0;
 		 do {
@@ -55,8 +55,7 @@ public class Menu {
 						
 						switch(opcion2) {
 							case 1:
-								Querys q = new Querys();
-								q.cargarTablaCartas(db);
+								
 								break;
 						}
 					} while (opcion2!=0);
@@ -69,5 +68,11 @@ public class Menu {
 				break;
 			}
 		} while (opcion!=0);
+	 }
+	 public void cargar_colecciones(MongoDatabase db) {
+		 Querys q= new Querys();
+		 q.dropeartablas(db);
+		 
+		 q.cargarTablaCartas(db);
 	 }
 }

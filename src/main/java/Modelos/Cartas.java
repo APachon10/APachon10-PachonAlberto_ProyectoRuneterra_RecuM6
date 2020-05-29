@@ -1,6 +1,6 @@
 package Modelos;
 
-public class Cartas {
+public class Cartas extends Object{
 	private int id;
     private String tipo;
     private String nombre_carta;
