@@ -56,7 +56,7 @@ public class Menu {
 						switch(opcion2) {
 							case 1:
 								Querys q = new Querys();
-								q.cargarTablaCartas();
+								q.cargarTablaCartas(db);
 								break;
 						}
 					} while (opcion2!=0);
