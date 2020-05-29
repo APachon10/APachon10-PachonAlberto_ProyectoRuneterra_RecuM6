@@ -6,8 +6,8 @@ public class Usuarios extends Object{
 	private int id;
 	private String username;
 	private String password;
-	private ArrayList cartas_compradas;
-	private ArrayList barajas;
+	private ArrayList<Integer> cartas_compradas;
+	private ArrayList<Integer> barajas;
 	//Getters
 	public int getId() {
 		return id;
@@ -18,10 +18,10 @@ public class Usuarios extends Object{
 	public String getPassword() {
 		return password;
 	}
-	public ArrayList getCartas_compradas() {
+	public ArrayList<Integer> getCartas_compradas() {
 		return cartas_compradas;
 	}
-	public ArrayList getBarajas() {
+	public ArrayList<Integer> getBarajas() {
 		return barajas;
 	}
 	//Setters
@@ -34,10 +34,10 @@ public class Usuarios extends Object{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setCartas_compradas(ArrayList cartas_compradas) {
+	public void setCartas_compradas(ArrayList<Integer> cartas_compradas) {
 		this.cartas_compradas = cartas_compradas;
 	}
-	public void setBarajas(ArrayList barajas) {
+	public void setBarajas(ArrayList<Integer> barajas) {
 		this.barajas = barajas;
 	}
 	// To String

@@ -14,6 +14,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import Modelos.Cartas;
+import Modelos.Usuarios;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -83,7 +84,7 @@ public class Querys {
 		Object o = new Cartas();
 		leerFicheroJson(f,collection_cards,o);
 	}
-	public void cargarTablaUsers() {
+	public void cargarTablaUsers(MongoDatabase db) {
 		
 		JSONParser parser = new JSONParser();
 		File f = new File("..PachonAlberto_ProyectoRuneTerra/Usuarios.json");
@@ -107,12 +108,13 @@ public class Querys {
 			
 			JSONArray lista_elementos = (JSONArray) parser.parse(fr);
 			// Usamos el simbolo de exclamacion para indicar que el contenido del iterator deriva de la clase Object
-			Iterator<?> iterator = lista_elementos.iterator();
+			Iterator<?> iter = lista_elementos.iterator();
 			
-			while (iterator.hasNext()) {
+			while (iter.hasNext()) {
 				// Hacemos una accion u otra en base a la clase que le pasamos al metodo.
 				if(o instanceof Cartas) {
-					JSONObject object = (JSONObject) iterator.next();
+					JSONObject object = (JSONObject) iter.next();
+					
 					((Cartas) o).setId(Integer.parseInt(object.get("id").toString()));
 					((Cartas) o).setTipo((String) object.get("tipo"));
 					((Cartas) o).setNombre_carta((String) object.get("nombre_carta"));
@@ -130,6 +132,20 @@ public class Querys {
 							.append("vida", ((Cartas) o).getVida())
 							.append("habilidad_especial", ((Cartas) o).getHabilidad_especial())
 							.append("faccion", ((Cartas) o).getFaccion());
+				}else if(o instanceof Usuarios) {
+					JSONObject object = (JSONObject) iter.next();
+					
+					((Usuarios)o).setId(Integer.parseInt(object.get("id").toString()));
+					((Usuarios)o).setUsername((String)object.get("username"));
+					((Usuarios)o).setPassword((String)object.get("password"));
+					((Usuarios)o).setCartas_compradas((ArrayList<Integer>) object.get("cartas_compradas"));
+					((Usuarios)o).setBarajas((ArrayList<Integer>) object.get("barajas"));
+					
+					new_doc = new Document("id", ((Usuarios) o).getId())
+							.append("username", ((Usuarios) o).getUsername())
+							.append("Password",((Usuarios) o).getPassword())
+							.append("cartas_compradas",((Usuarios) o).getCartas_compradas())
+							.append("barajas", ((Usuarios) o).getBarajas());
 				}
 				nueva_coleccion.insertOne(new_doc);
 			}
