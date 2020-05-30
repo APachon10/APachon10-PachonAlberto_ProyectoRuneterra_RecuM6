@@ -26,6 +26,7 @@ public class Login {
 			
 			if(iterator_user.hasNext()) {
 				existe=true;
+				
 			}else {
 				existe=false;
 			}

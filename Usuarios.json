@@ -4,5 +4,11 @@
 		"username":"Alberto",
 			"cartas_compradas":[1,2,3,4,5,6,7,8,9,10],
 			"barajas":[1,2]
+	},
+	{
+		"id": 2,
+		"username":"Rafa",
+			"cartas_compradas":[1,2,3,4,5,6,7,8,9,10],
+			"barajas":[1,2,3]
 	}
 ]

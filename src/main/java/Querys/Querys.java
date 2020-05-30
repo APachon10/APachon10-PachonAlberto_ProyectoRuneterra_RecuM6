@@ -23,7 +23,29 @@ import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
 
 public class Querys {
-	
+	public void mostrarUser(MongoDatabase db,String username) {
+		MongoCollection<Document> usuario = db.getCollection("Users");
+		FindIterable<Document> docs = usuario.find();
+		
+		Iterator<Document> iterator_user = null;
+		Document doc_user = new Document();
+		
+		try {
+			// Le decimso al programa lo que tiene que buscar 
+			doc_user.append("username", username);
+			iterator_user = usuario.find(doc_user).iterator();
+			
+			if(iterator_user.hasNext()) {
+				System.out.println("id: "+doc_user.get("id")+" - "
+						+", nombre: "+doc_user.get("username")+" - "
+						+", valor: "+doc_user.get("cartas_compradas")
+						+", barajas_usuario: "+doc_user.get("barajas"));
+				
+			}
+		}catch(Exception e) {
+			
+		}
+	}
 	// Querys relacionadas con la tabla Cartas
 	public ArrayList mostrarCartasCompradas_por_user(MongoDatabase db) {
 		MongoCollection<Document> tabla_usuarios = db.getCollection("Users");
@@ -74,7 +96,7 @@ public class Querys {
 	public void modificarBaraja() {
 		
 	}
-	public void cambiarNombreBaraja() {
+	public void cambiarNombreBaraja(MongoDatabase db,int baraja_id) {
 		
 	}
 	public void cargarBaraja_por_Defecto() {

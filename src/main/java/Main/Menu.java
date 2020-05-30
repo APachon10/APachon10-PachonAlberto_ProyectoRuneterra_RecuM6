@@ -35,6 +35,7 @@ public class Menu {
 
 				// Verificamos los datos y entramos en caso de que los datos sean correctos 
 				if(existe_user == true) {
+					
 					Scanner scan2 =  new Scanner(System.in);
 					int opcion2 = 0;
 					do {
@@ -50,7 +51,7 @@ public class Menu {
 						switch(opcion2) {
 							case 1:
 								Querys q = new Querys();
-								q.mostrarBarajas(db);
+								q.mostrarUser(db, username);
 								break;
 						}
 					} while (opcion2!=0);
