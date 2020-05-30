@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Usuarios extends Object{
 	private int id;
 	private String username;
-	private String password;
 	private ArrayList<Integer> cartas_compradas;
 	private ArrayList<Integer> barajas;
 	//Getters
@@ -14,9 +13,6 @@ public class Usuarios extends Object{
 	}
 	public String getUsername() {
 		return username;
-	}
-	public String getPassword() {
-		return password;
 	}
 	public ArrayList<Integer> getCartas_compradas() {
 		return cartas_compradas;
@@ -31,9 +27,6 @@ public class Usuarios extends Object{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public void setCartas_compradas(ArrayList<Integer> cartas_compradas) {
 		this.cartas_compradas = cartas_compradas;
 	}
@@ -43,7 +36,7 @@ public class Usuarios extends Object{
 	// To String
 	@Override
 	public String toString() {
-		return "Usuarios [id=" + id + ", username=" + username + ", password=" + password + ", cartas_compradas="
+		return "Usuarios [id=" + id + ", username=" + username +", cartas_compradas="
 				+ cartas_compradas + ", barajas=" + barajas + "]";
 	}
 	

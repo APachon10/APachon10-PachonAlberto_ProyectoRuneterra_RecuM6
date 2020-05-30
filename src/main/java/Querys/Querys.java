@@ -156,13 +156,11 @@ public class Querys {
 					
 					((Usuarios)o).setId(Integer.parseInt(object.get("id").toString()));
 					((Usuarios)o).setUsername((String)object.get("username"));
-					((Usuarios)o).setPassword((String)object.get("password"));
 					((Usuarios)o).setCartas_compradas((ArrayList<Integer>) object.get("cartas_compradas"));
 					((Usuarios)o).setBarajas((ArrayList<Integer>) object.get("barajas"));
 					
 					new_doc = new Document("id", ((Usuarios) o).getId())
 							.append("username", ((Usuarios) o).getUsername())
-							.append("Password",((Usuarios) o).getPassword())
 							.append("cartas_compradas",((Usuarios) o).getCartas_compradas())
 							.append("barajas", ((Usuarios) o).getBarajas());
 				}else if(o instanceof Barajas) {
@@ -170,12 +168,13 @@ public class Querys {
 					((Barajas)o).setBaraja_id(Integer.parseInt(object.get("baraja_id").toString()));
 					((Barajas)o).setNombre_baraja((String)object.get("nombre_baraja"));
 					((Barajas)o).setValor_baraja(Integer.parseInt(object.get("valor_baraja").toString()));
-					((Barajas)o).setCartas_baraja((ArrayList<Integer>) object.get("cartas_baraja"));
+					((Barajas)o).setCartas_baraja((ArrayList<Integer>) object.get("cartas_barajas"));
 					
-					new_doc = new Document("id", ((Barajas) o).getBaraja_id())
-							.append("nombre baraja", ((Barajas) o).getNombre_baraja())
-							.append("Valor",((Barajas) o).getValor_baraja())
-							.append("Cartas Baraja",((Barajas) o).getCartas_baraja());
+					
+					new_doc = new Document("baraja_id", ((Barajas) o).getBaraja_id())
+							.append("nombre_baraja", ((Barajas) o).getNombre_baraja())
+							.append("cartas_baraja",((Barajas) o).getCartas_baraja())
+							.append("valor_baraja",((Barajas) o).getValor_baraja());
 				}
 				nueva_coleccion.insertOne(new_doc);
 			}

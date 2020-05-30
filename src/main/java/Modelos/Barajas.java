@@ -6,7 +6,7 @@ public class Barajas {
 	private int baraja_id;
 	private String nombre_baraja;
 	private  int valor_baraja;
-	private ArrayList cartas_baraja;
+	private ArrayList<Integer> cartas_baraja;
 	//Getters
 	public int getBaraja_id() {
 		return baraja_id;
@@ -17,7 +17,7 @@ public class Barajas {
 	public int getValor_baraja() {
 		return valor_baraja;
 	}
-	public ArrayList getCartas_baraja() {
+	public ArrayList<Integer> getCartas_baraja() {
 		return cartas_baraja;
 	}
 	//Setters
@@ -30,7 +30,7 @@ public class Barajas {
 	public void setValor_baraja(int valor_baraja) {
 		this.valor_baraja = valor_baraja;
 	}	
-	public void setCartas_baraja(ArrayList cartas_baraja) {
+	public void setCartas_baraja(ArrayList<Integer> cartas_baraja) {
 		this.cartas_baraja = cartas_baraja;
 	}
 	

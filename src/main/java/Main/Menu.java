@@ -27,20 +27,14 @@ public class Menu {
 				System.out.println("=================");
 				
 				// Pedimos las credenciales al usuario 
-				System.out.print("Username: ");
+				System.out.print("Username:");
 				String username = scanner.next();
-				System.out.println("=================");
-				System.out.print("Password:");
-				String password = scanner.next();
-				System.out.println("====================");
 				
 				Login g= new Login();
 				existe_user= g.verificarnombredeUsuario(db, username);
-				System.out.println("====================");
-				password_correct = g.verificarPassword(db, password);
-				
+
 				// Verificamos los datos y entramos en caso de que los datos sean correctos 
-				if(existe_user == true && password_correct == true) {
+				if(existe_user == true) {
 					Scanner scan2 =  new Scanner(System.in);
 					int opcion2 = 0;
 					do {
@@ -75,7 +69,8 @@ public class Menu {
 		 q.dropeartablas(db);
 		 
 		 q.cargarTablaCartas(db);
-		 q.cargarTablaUsers(db);
 		 q.cargarTablaBarajas(db);
+		 q.cargarTablaUsers(db);
+		 
 	 }
 }
