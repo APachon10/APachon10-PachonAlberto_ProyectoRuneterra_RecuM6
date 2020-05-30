@@ -27,8 +27,7 @@ public class Principal {
 		}
 		
 	}
-	public static 
-	void desactivar_Log() {
+	public static void desactivar_Log() {
 		Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
 		mongoLogger.setLevel(Level.SEVERE);
 		mongoLogger.getLogger("org.mongodb.driver.connection").setLevel(Level.OFF);

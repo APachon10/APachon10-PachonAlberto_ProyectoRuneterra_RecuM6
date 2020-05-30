@@ -9,14 +9,14 @@ import Querys.Querys;
 
 public class Menu {	
 	 public void menu(MongoDatabase db) { 
+		 //Cargamos las Colecciones( el drop esta metido dentro del metodo)
+		 cargar_colecciones(db);
+		 //Comenzamos el Programa 
 		 Scanner scanner = new Scanner(System.in); 
 		 int opcion = 0;
 		 do {
 			System.out.println("Que quieres hacer? "
 					+ "\n1 - Login "
-					+ ""
-					+ ""
-					+ ""
 					+ "\n0 - Salir ");
 			System.out.print("opcion:");
 			opcion = scanner.nextInt();
@@ -55,7 +55,8 @@ public class Menu {
 						
 						switch(opcion2) {
 							case 1:
-								
+								Querys q = new Querys();
+								q.mostrarBarajas(db);
 								break;
 						}
 					} while (opcion2!=0);
@@ -74,5 +75,7 @@ public class Menu {
 		 q.dropeartablas(db);
 		 
 		 q.cargarTablaCartas(db);
+		 q.cargarTablaUsers(db);
+		 q.cargarTablaBarajas(db);
 	 }
 }

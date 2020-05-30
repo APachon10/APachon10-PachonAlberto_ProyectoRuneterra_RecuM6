@@ -56,7 +56,21 @@ public class Querys {
 	public void comprarCartas(MongoDatabase db){
 		
 	}
-	// Querys relacionadas con la tabla Barajas 
+	// Querys relacionadas con la tabla Barajas
+	public void mostrarBarajas(MongoDatabase db) {
+		MongoCollection<Document> barajas_usuario = db.getCollection("Decks");
+		FindIterable<Document> docs = barajas_usuario.find();
+		
+		Iterator<Document> iterator_user = null;
+		Document doc_user = new Document();
+		
+		for (Document document : docs) {
+			System.out.println("id: "+document.get("baraja_id")+" - "
+					+", nombre: "+document.get("nombre_baraja")+" - "
+					+", valor: "+document.get("valor_baraja")
+					+", cartas_baraja: "+document.get("cartas_barajas"));
+		}
+	}
 	public void modificarBaraja() {
 		
 	}
