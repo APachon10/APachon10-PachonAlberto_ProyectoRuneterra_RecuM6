@@ -13,6 +13,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import Modelos.Barajas;
 import Modelos.Cartas;
 import Modelos.Usuarios;
 
@@ -86,12 +87,16 @@ public class Querys {
 	}
 	public void cargarTablaUsers(MongoDatabase db) {
 		
-		JSONParser parser = new JSONParser();
-		File f = new File("..PachonAlberto_ProyectoRuneTerra/Usuarios.json");
+		MongoCollection<Document> collection_users = db.getCollection("Users");
+		File f = new File("../PachonAlberto_ProyectoRuneTerra/Usuarios.json");
+		Object o = new Usuarios();
+		leerFicheroJson(f,collection_users,o);
 	}
-	public void cargarTablaBarajas() {
-		JSONParser parser = new JSONParser();
+	public void cargarTablaBarajas(MongoDatabase db) {
+		MongoCollection<Document> collection_decks = db.getCollection("Decks");
 		File f = new File("../PachonAlberto_ProyectoRuneTerra/Barajas.json");
+		Object o = new Barajas();
+		leerFicheroJson(f,collection_decks,o);
 	}
 	//Metodo para leer ficheros json
 	public void leerFicheroJson(File fjson,MongoCollection<Document> nueva_coleccion,Object o) {
@@ -146,6 +151,17 @@ public class Querys {
 							.append("Password",((Usuarios) o).getPassword())
 							.append("cartas_compradas",((Usuarios) o).getCartas_compradas())
 							.append("barajas", ((Usuarios) o).getBarajas());
+				}else if(o instanceof Barajas) {
+					JSONObject object = (JSONObject) iter.next();
+					((Barajas)o).setBaraja_id(Integer.parseInt(object.get("baraja_id").toString()));
+					((Barajas)o).setNombre_baraja((String)object.get("nombre_baraja"));
+					((Barajas)o).setValor_baraja(Integer.parseInt(object.get("valor_baraja").toString()));
+					((Barajas)o).setCartas_baraja((ArrayList<Integer>) object.get("cartas_baraja"));
+					
+					new_doc = new Document("id", ((Barajas) o).getBaraja_id())
+							.append("nombre baraja", ((Barajas) o).getNombre_baraja())
+							.append("Valor",((Barajas) o).getValor_baraja())
+							.append("Cartas Baraja",((Barajas) o).getCartas_baraja());
 				}
 				nueva_coleccion.insertOne(new_doc);
 			}
