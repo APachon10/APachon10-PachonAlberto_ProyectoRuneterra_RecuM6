@@ -1,9 +1,11 @@
 package Main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.mongodb.client.MongoDatabase;
 
+import Modelos.Usuarios;
 import Querys.Login;
 import Querys.Querys;
 
@@ -31,7 +33,10 @@ public class Menu {
 				String username = scanner.next();
 				
 				Login g= new Login();
+				Usuarios g2 = new Usuarios();
 				existe_user= g.verificarnombredeUsuario(db, username);
+				
+				g2.setUsername(username);
 
 				// Verificamos los datos y entramos en caso de que los datos sean correctos 
 				if(existe_user == true) {
@@ -50,8 +55,10 @@ public class Menu {
 						
 						switch(opcion2) {
 							case 1:
+								 
 								Querys q = new Querys();
-								q.mostrarUser(db, username);
+								ArrayList<Usuarios>  lista_usuarios = q.mostrarUsers(db);
+								q.mostrarUser(db,lista_usuarios,username);
 								break;
 						}
 					} while (opcion2!=0);

@@ -23,27 +23,33 @@ import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
 
 public class Querys {
-	public void mostrarUser(MongoDatabase db,String username) {
+	public ArrayList<Usuarios> mostrarUsers(MongoDatabase db){
 		MongoCollection<Document> usuario = db.getCollection("Users");
 		FindIterable<Document> docs = usuario.find();
 		
+		ArrayList<Usuarios> lista = new ArrayList<Usuarios>();
 		Iterator<Document> iterator_user = null;
 		Document doc_user = new Document();
 		
-		try {
-			// Le decimso al programa lo que tiene que buscar 
-			doc_user.append("username", username);
-			iterator_user = usuario.find(doc_user).iterator();
+		for (Document document : docs) {
+			Usuarios g = new Usuarios();
+			//System.out.println("id: "+document.get("id")+" - "+",username: "+document.get("username")+" - "+", cartas_compradas: "+document.get("cartas_compradas")+", barajas_usuario :"+document.get("barajas"));
+		
+			g.setId((Integer.parseInt (document.get("id").toString()) ));
+			g.setUsername((String)document.get("username"));
+			g.setCartas_compradas((ArrayList<Integer>) document.get("cartas_compradas"));
+			g.setBarajas((ArrayList<Integer>) document.get("barajas"));
 			
-			if(iterator_user.hasNext()) {
-				System.out.println("id: "+doc_user.get("id")+" - "
-						+", nombre: "+doc_user.get("username")+" - "
-						+", valor: "+doc_user.get("cartas_compradas")
-						+", barajas_usuario: "+doc_user.get("barajas"));
-				
+			lista.add(g);
+		}
+		return lista;
+	}
+	public void mostrarUser(MongoDatabase db,ArrayList<Usuarios> lista_usuarios,String username) {
+		lista_usuarios = mostrarUsers(db);
+		for (int i = 0; i < lista_usuarios.size(); i++) {
+			if(lista_usuarios.get(i).getUsername().equalsIgnoreCase(username)) {
+				System.out.println(lista_usuarios.get(i));
 			}
-		}catch(Exception e) {
-			
 		}
 	}
 	// Querys relacionadas con la tabla Cartas
