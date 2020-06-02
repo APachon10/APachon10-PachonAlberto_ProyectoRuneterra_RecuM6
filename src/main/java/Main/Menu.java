@@ -55,10 +55,10 @@ public class Menu {
 						
 						switch(opcion2) {
 							case 1:
-								 
+								break;
+							case 4:
 								Querys q = new Querys();
-								ArrayList<Usuarios>  lista_usuarios = q.mostrarUsers(db);
-								q.mostrarUser(db,lista_usuarios,username);
+								q.comprarCartas(db, username);
 								break;
 						}
 					} while (opcion2!=0);

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import org.bson.Document;
 
@@ -28,7 +29,6 @@ public class Querys {
 		FindIterable<Document> docs = usuario.find();
 		
 		ArrayList<Usuarios> lista = new ArrayList<Usuarios>();
-		Iterator<Document> iterator_user = null;
 		Document doc_user = new Document();
 		
 		for (Document document : docs) {
@@ -44,6 +44,51 @@ public class Querys {
 		}
 		return lista;
 	}
+	public ArrayList<Cartas> mostrarCartas(MongoDatabase db,ArrayList<Cartas> cartas,Cartas c) {
+		MongoCollection<Document> cartas_compradas = db.getCollection("Cards");
+		FindIterable<Document> docs = cartas_compradas.find();
+		
+		Iterator<Document> iterator_user = null;
+		Document doc_user = new Document();
+		
+		for (Document document : docs) {
+			c= new Cartas();
+			
+			c.setId(Integer.parseInt(document.get("id").toString()));
+			c.setTipo((String) document.get("tipo"));
+			c.setNombre_carta((String) document.get("nombre_carta"));
+			c.setCoste_invocacion(Integer.parseInt(document.get("coste_invocacion").toString()));
+			c.setAtaque(Integer.parseInt(document.get("ataque").toString()));
+			c.setVida(Integer.parseInt(document.get("vida").toString()));
+			c.setHabilidad_especial((String) document.get("habilidad_especial"));
+			c.setFaccion((String) document.get("faccion"));
+			
+			cartas.add(c);
+		}
+		return cartas;
+	}
+	public ArrayList<Barajas> mostrarBarajas(MongoDatabase db,ArrayList<Barajas> decks,Barajas d) {
+		MongoCollection<Document> decks2 = db.getCollection("Decks");
+		FindIterable<Document> docs = decks2.find();
+		
+		Iterator<Document> iterator_user = null;
+		Document doc_user = new Document();
+		
+		for (Document document : docs) {
+			d= new Barajas();
+			
+			d.setBaraja_id(Integer.parseInt(document.get("baraja_id").toString()));
+			d.setNombre_baraja((String)document.get("nombre_baraja"));
+			d.setValor_baraja(Integer.parseInt(document.get("valor_baraja").toString()));
+			d.setCartas_baraja((ArrayList<Integer>) document.get("cartas_barajas"));
+			
+			decks.add(d);
+		}
+		return decks;
+	}
+	
+	/**/
+	
 	public void mostrarUser(MongoDatabase db,ArrayList<Usuarios> lista_usuarios,String username) {
 		lista_usuarios = mostrarUsers(db);
 		for (int i = 0; i < lista_usuarios.size(); i++) {
@@ -52,38 +97,96 @@ public class Querys {
 			}
 		}
 	}
-	// Querys relacionadas con la tabla Cartas
-	public ArrayList mostrarCartasCompradas_por_user(MongoDatabase db) {
-		MongoCollection<Document> tabla_usuarios = db.getCollection("Users");
-		FindIterable<Document> docs = tabla_usuarios.find();
+	public ArrayList<Integer> obteneridBarajas(MongoDatabase db,ArrayList<Integer> barajas_id,String username) {
+		MongoCollection<Document> usuarios = db.getCollection("Users");
+		FindIterable<Document> docs = usuarios.find();
 		
-		ArrayList cartas_compradas = new ArrayList();
+		ArrayList<Usuarios> lista_usuarios2 = mostrarUsers(db);
 		
-		Iterator<Document> iterator_user = null;
-		Document doc_user = new Document();
-		try {
-			
-		} catch (Exception e) {
-			System.out.println("ERROR!");
-			System.out.println("======================");
-			e.printStackTrace();
+		for (int i = 0; i < lista_usuarios2.size(); i++) {
+			if(lista_usuarios2.get(i).getUsername().equalsIgnoreCase(username)) {
+				barajas_id = lista_usuarios2.get(i).getBarajas();
+			}
+		}
+		return barajas_id;
+	}
+	public ArrayList<Integer> obtenerCartascompradas_por_user(MongoDatabase db,ArrayList<Integer> cartas_compradas,String username){
+		MongoCollection<Document> usuarios = db.getCollection("Users");
+		FindIterable<Document> docs = usuarios.find();
+		
+		ArrayList<Usuarios> lista_usuarios2 = mostrarUsers(db);
+		
+		for (int i = 0; i < lista_usuarios2.size(); i++) {
+			if(lista_usuarios2.get(i).getUsername().equalsIgnoreCase(username)) {
+				cartas_compradas = lista_usuarios2.get(i).getCartas_compradas();
+			}
 		}
 		return cartas_compradas;
 	}
-	public void mostrarCartas(MongoDatabase db) {
-		MongoCollection<Document> cartas_compradas = db.getCollection("Cards");
-		FindIterable<Document> docs = cartas_compradas.find();
+	public ArrayList<Integer> mostrarCartasCompradas_por_user(MongoDatabase db,String username) {
+		ArrayList<Integer> cartas_compradas = new ArrayList<Integer>();
+		cartas_compradas = obtenerCartascompradas_por_user(db,cartas_compradas,username);
 		
-		Iterator<Document> iterator_user = null;
-		Document doc_user = new Document();
-		
-		for (Document document : docs) {
-			
+		for (int i = 0; i < cartas_compradas.size(); i++) {
+			System.out.println(cartas_compradas.get(i));
 		}
+		return cartas_compradas;
 	}
-	public void comprarCartas(MongoDatabase db){
+	
+	// Querys relacionadas con la tabla Cartas
+	public void comprarCartas(MongoDatabase db,String username){
+		MongoCollection<Document> usuario = db.getCollection("Users");
+		Scanner scanner = new Scanner(System.in);
+		ArrayList<Integer> cartas_compradas = new ArrayList<Integer>();
+		cartas_compradas = obtenerCartascompradas_por_user(db,cartas_compradas,username);
+		boolean compra_finalizada=false;
+		int carta_escogida = 0;
+		ArrayList<Cartas> cartas_totales = new ArrayList<Cartas>();
+		Cartas c= new Cartas();
+		cartas_totales = mostrarCartas(db, cartas_totales, c);
+		System.out.println("Cartas Compradas por el usuario ");
+		System.out.println("===========================");
+		for (int i = 0; i < cartas_compradas.size(); i++) {
+			System.out.println(cartas_compradas.get(i));
+		}System.out.println("===========================");
 		
+		do {
+			System.out.println("Que carta quieres comprar? ");
+			System.out.println("Cartas Disponibles");
+			System.out.println("===========================");
+			for (int i = 0; i < cartas_totales.size(); i++) {
+				System.out.println(cartas_totales.get(i));
+			}
+			System.out.println("===========================");
+			System.out.print("carta_Escogida: ");
+			carta_escogida = scanner.nextInt();
+			if (carta_escogida <= 0) {
+				compra_finalizada=true;
+			}else {
+				for (int i = 0; i < cartas_totales.size(); i++) {
+					if(!cartas_totales.contains(carta_escogida)) {
+						for (int j = 0; j < cartas_compradas.size(); j++) {
+							if(!cartas_compradas.contains(carta_escogida)) {
+								System.out.println("Carta: "+carta_escogida + " obtenida por el usuario:" + username);
+								System.out.println("=================================");
+								cartas_compradas.add(carta_escogida);
+								compra_finalizada = true;
+							}
+						}
+					}
+				}
+				Document filtro = new Document("username", username);
+				Document nuevo_documento = new Document("cartas_compradas", cartas_compradas);
+				Document documento_actualizado = new Document("$set", nuevo_documento);
+				
+				usuario.updateOne(filtro, documento_actualizado); 
+				for (int i = 0; i < cartas_compradas.size(); i++) {
+					System.out.println(cartas_compradas.get(i));
+				}
+			}
+		} while (compra_finalizada);
 	}
+	
 	// Querys relacionadas con la tabla Barajas
 	public void mostrarBarajas(MongoDatabase db) {
 		MongoCollection<Document> barajas_usuario = db.getCollection("Decks");
@@ -108,6 +211,7 @@ public class Querys {
 	public void cargarBaraja_por_Defecto() {
 		
 	}
+	
 	//Metodo para dropear las tablas 
 	public void dropeartablas(MongoDatabase db) {
 		MongoCollection<Document> collection_card = db.getCollection("Cards");
@@ -120,6 +224,7 @@ public class Querys {
 		collection_deck.drop();
 		
 	}
+	
 	//Metodo para cargar las tablas 
 	public void cargarTablaCartas(MongoDatabase db) {
 		MongoCollection<Document> collection_cards = db.getCollection("Cards");
@@ -140,6 +245,7 @@ public class Querys {
 		Object o = new Barajas();
 		leerFicheroJson(f,collection_decks,o);
 	}
+	
 	//Metodo para leer ficheros json
 	public void leerFicheroJson(File fjson,MongoCollection<Document> nueva_coleccion,Object o) {
 		JSONParser parser = new JSONParser();
